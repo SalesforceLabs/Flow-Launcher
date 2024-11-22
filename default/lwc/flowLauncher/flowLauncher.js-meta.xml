@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Flow Launcher</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="buttonLabel" label="Button Label" type="String" />
+            <property name="showFlowInModal" label="Show Flow in Modal" type="Boolean" description="When true flow will launch in modal window" />
+            <property name="flowToLaunch" label="Flow API Name" type="String"/>
+            <property name="flowInputVariableName" label="Subflow Input Variable Name" description="If passing a variable to subflow enter the variable name here i.e. recordId" type="String" placeholder="recordId"/>
+            <property name="flowInputValue" label="Subflow Input Value" type="String" description="If your subflow has a string input you can pass a value to that variable from your main flow"/>
+            <property name="buttonVariant" label="Button Variant" type="String" description="The variant for your button i.e. brand default is neutral" />
+            <property name="stretchButton" label="Stretch Button" type="Boolean" description="When true the button stretches the container width" />
+            <property name="iconName" label="Icon Name" type="String" description="Icon Name i.e. utility:flow"/>
+            <property name="iconPosition" label="Icon Position" type="String" description="Left or Right sets your icon position"/>
+            <property name="buttonPadding" label="Button Padding" type="String" description="Sets button padding using slds styling default is slds-p-around_small" />         
+            
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

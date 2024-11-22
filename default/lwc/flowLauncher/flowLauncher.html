@@ -1,0 +1,8 @@
+<template>
+    <div class={buttonPadding}>
+        <lightning-button label={buttonLabel} icon-name={iconName} icon-position={iconPosition} variant={buttonVariant} stretch={stretchButton} onclick={handleButtonClick}></lightning-button>
+    </div>
+    <div lwc:if={showFlow} class={buttonPadding}>
+        <lightning-flow flow-api-name={flowToLaunch} flow-finish-behavior={flowFinishBehavior} flow-input-variables={flowParams} onstatuschange={handleStatusChange}></lightning-flow>
+    </div>
+</template>
