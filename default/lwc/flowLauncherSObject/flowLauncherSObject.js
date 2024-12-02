@@ -1,41 +1,100 @@
-import { api, wire } from 'lwc';
-import {
-    IsConsoleNavigation,
-    getFocusedTabInfo,
-    refreshTab
-} from 'lightning/platformWorkspaceApi';
-import LightningModal from 'lightning/modal';
+import { LightningElement, api } from 'lwc';
+import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
+import flowModal from 'c/flowModal';
 
-export default class flowModal extends LightningModal {
-    @api flowNameToInvoke;
+export default class FlowLauncher extends LightningElement {
+
+    @api buttonLabel;
+    @api showFlowInModal;
+    @api flowToLaunch;
     @api flowParams = [];
     @api flowFinishBehavior;
+    @api flowInputValue;
+    @api flowInputVariableName;
+    @api flowInputVariablesJSON;
+    @api iconName;
+    @api buttonVariant;
+    @api iconPosition;
+    @api stretchButton;
+    @api buttonPadding = 'slds-p-around_small';
 
-    /* SYSTEM INPUTS */
-    @api availableActions = [];
+    showFlow = false;
 
-    // isConsoleNavigateion doesn't work when LWC is run inside of a Screen Flow
-    // @wire(IsConsoleNavigation) isConsoleNavigation;
+    /* Flow Outputs */
+    @api OUTPUT_String;
+    @api OUTPUT_Integer;
+    @api OUTPUT_Record;
+    @api OUTPUT_Collection;
 
-    handleOpenModal(event) {
-        if (event.detail.status === 'FINISHED' || event.detail.status === 'FINISHED_SCREEN') {
-            // this.close('modal closed, flow status is ' + event.detail.status);
-            this.close(event.detail.outputVariables);
-            this.refreshTab();
+    handleButtonClick() {
+        if (this.showFlowInModal) {
+            this.handleOpenModal();
+        } else {
+            this.handleOpenFlow();
         }
     }
 
-    async refreshTab() {
-        // Use try/catch instead of checking for isCOnsoleNavigation
-        try{
-            const { tabId } = await getFocusedTabInfo();
-            await refreshTab(tabId, {
-                includeAllSubtabs: true
-            });
-        } catch (e) {
-            // Not running in Console App
-        }
+    handleOpenFlow() {
+        this.showFlow = true;
+    }
 
+    handleStatusChange(event) {
+        if (event.detail.status === 'FINISHED' || event.detail.status === 'FINISHED_SCREEN') {
+            this.showFlow = false;
+            this.handleFlowOutputs(event.detail.outputVariables);
+        }
+    }
+
+    async handleOpenModal() {
+        const result = await flowModal.open({
+
+            description: 'This is a flow launched from a button click',
+            flowNameToInvoke: this.flowToLaunch,
+            flowParams: this.flowParams,
+            label: 'New Label',
+            size: 'large',            
+
+        });
+        this.handleFlowOutputs(result);
+        //console.log(result);
+    }
+
+    /* Handle Flow Outputs */
+    handleFlowOutputs(outputVariables) {      
+            for (let i = 0; i < outputVariables.length; i++) {
+                const outputVar = outputVariables[i];
+                switch (outputVar.name) {
+                    case "OUTPUT_String":
+                        this.OUTPUT_String = outputVar.value;
+                        this.dispatchEvent(new FlowAttributeChangeEvent('OUTPUT_String', this.OUTPUT_String));
+                        break;
+                    case "OUTPUT_Integer":
+                        this.OUTPUT_Integer = outputVar.value;
+                        this.dispatchEvent(new FlowAttributeChangeEvent('OUTPUT_Integer', this.OUTPUT_Integer));
+                        break;
+                    case "OUTPUT_Record":
+                        this.OUTPUT_Record = outputVar.value;
+                        this.dispatchEvent(new FlowAttributeChangeEvent('OUTPUT_Record', this.OUTPUT_Record));
+                        break;   
+                    case "OUTPUT_Collection":
+                        this.OUTPUT_Collection = outputVar.value;
+                        this.dispatchEvent(new FlowAttributeChangeEvent('OUTPUT_Collection', this.OUTPUT_Collection));
+                }
+            }
+    }
+
+    get flowParams() {
+        if(this.flowInputVariablesJSON) {
+            return JSON.parse(this.flowInputVariablesJSON);
+        } else {
+            if(this.flowInputValue) {return [
+                {
+                    name: this.flowInputVariableName,
+                    type: 'String',
+                    value: this.flowInputValue || ''
+                },
+            ]};
+        }
     }
 
 }
