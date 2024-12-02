@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Flow Launcher</masterLabel>
+    <masterLabel>Flow Launcher_SObject</masterLabel>
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
@@ -23,6 +23,9 @@
             <!-- Predefined Outputs -->
             <property name="OUTPUT_String" label="Launched Flow Output Result - String" type="String" role="outputOnly"/>
             <property name="OUTPUT_Integer" label="Launched Flow Output Result - Integer" type="Integer" role="outputOnly"/>
+            <propertyType name="T" extends="SObject" label="Flow Output Object API Name" description="Select the API Name of the SObject to use for the launched flow's output"/>
+            <property name="OUTPUT_Record" label="Launched Flow Output Result - Record" type="{T}" role="outputOnly"/>
+            <property name="OUTPUT_Collection" label="Launched Flow Output Result - Collection" type="{T[]}" role="outputOnly"/>
 
         </targetConfig>
     </targetConfigs>

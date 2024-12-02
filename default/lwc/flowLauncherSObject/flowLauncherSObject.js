@@ -26,7 +26,7 @@ export default class flowModal extends LightningModal {
     }
 
     async refreshTab() {
-        // Use try/catch instead of checking for isConsoleNavigation
+        // Use try/catch instead of checking for isCOnsoleNavigation
         try{
             const { tabId } = await getFocusedTabInfo();
             await refreshTab(tabId, {
