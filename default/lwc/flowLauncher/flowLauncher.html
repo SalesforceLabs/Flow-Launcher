@@ -1,5 +1,9 @@
 <template>
-    <div class={buttonPadding}>
+    <div lwc:if={hideButton}>
+        <!-- Track, but do not display the reactive attribute(s) -->
+        <span hidden><lightning-formatted-text value={reactiveValue} onchange={handleButtonClick}></lightning-formatted-text></span>
+    </div>
+    <div lwc:else class={buttonPadding}>
         <lightning-button label={buttonLabel} icon-name={iconName} icon-position={iconPosition} variant={buttonVariant} stretch={stretchButton} onclick={handleButtonClick}></lightning-button>
     </div>
     <div lwc:if={showFlow} class={buttonPadding}>
