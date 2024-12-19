@@ -8,6 +8,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <propertyType name="T" extends="SObject" label="Flow Input/Output Object API Name" description="Select the API Name of the SObject to use for the launched flow's input/output"/>
             <property name="buttonLabel" label="Button Label" type="String" role="inputOnly"/>
             <property name="showFlowInModal" label="Show Flow in Modal" type="Boolean" description="When true flow will launch in modal window" role="inputOnly"/>
             <property name="flowToLaunch" label="Flow API Name" type="String" role="inputOnly"/>
@@ -18,12 +19,15 @@
             <property name="stretchButton" label="Stretch Button" type="Boolean" description="When true the button stretches the container width" role="inputOnly"/>
             <property name="iconName" label="Icon Name" type="String" description="Icon Name i.e. utility:flow" role="inputOnly"/>
             <property name="iconPosition" label="Icon Position" type="String" description="Left or Right sets your icon position" role="inputOnly"/>
-            <property name="buttonPadding" label="Button Padding" type="String" description="Sets button padding using slds styling default is slds-p-around_small" role="inputOnly"/>         
-            
+            <property name="buttonPadding" label="Button Padding" type="String" description="Sets button padding using slds styling default is slds-p-around_small" role="inputOnly"/> 
+            <property name="INPUT_Record" label="Launched Flow Input Attribute - Record" type="{T}" description="If your subflow has a record input you can pass a value to that variable from your main flow" role="inputOnly"/>
+            <property name="INPUT_Collection" label="Launched Flow Input Attribute - Collection" type="{T[]}" description="If your subflow has a record collection input you can pass a value to that variable from your main flow" role="inputOnly"/>
+            <property name="isDisableClose" label="Disable Close Icon" type="Boolean" description="If true, don't allow the user to close the flow modal with the X button or the ESC key.  (Default = false)" role="inputOnly"/> 
+            <property name="hideButton" label="Hide Launch Button" type="Boolean" description="If true, hide the launch button and reactively launch the flow when the Subflow Input Value or the Subflow Input Variables JSON change.  (Default = false)" role="inputOnly"/> 
+
             <!-- Predefined Outputs -->
             <property name="OUTPUT_String" label="Launched Flow Output Result - String" type="String" role="outputOnly"/>
             <property name="OUTPUT_Integer" label="Launched Flow Output Result - Integer" type="Integer" role="outputOnly"/>
-            <propertyType name="T" extends="SObject" label="Flow Output Object API Name" description="Select the API Name of the SObject to use for the launched flow's output"/>
             <property name="OUTPUT_Record" label="Launched Flow Output Result - Record" type="{T}" role="outputOnly"/>
             <property name="OUTPUT_Collection" label="Launched Flow Output Result - Collection" type="{T[]}" role="outputOnly"/>
 
