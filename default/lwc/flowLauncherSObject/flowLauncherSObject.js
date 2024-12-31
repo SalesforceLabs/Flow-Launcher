@@ -28,7 +28,7 @@ export default class FlowLauncher extends LightningElement {
     @api buttonLabel;
     @api showFlowInModal;
     @api flowToLaunch;
-    // @api flowParams = [];
+    @api flowParams = [];
     @api flowFinishBehavior;
     @api flowInputValue = '';
     @api flowInputVariableName;
