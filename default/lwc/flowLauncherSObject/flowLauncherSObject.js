@@ -180,7 +180,7 @@ export default class FlowLauncher extends LightningElement {
         //     type: 'String',
         //     value: this._sessionId
         // });
-        // return params;
+         return params;
     }
 
 }
