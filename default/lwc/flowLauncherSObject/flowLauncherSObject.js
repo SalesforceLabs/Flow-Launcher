@@ -51,7 +51,7 @@ export default class FlowLauncher extends LightningElement {
     _sessionId;
 
     get launchModalSize() {
-        switch(this.modalSize.toLowerCase) {
+        switch(this.modalSize.toLowerCase()) {
             case small:
                 return 'small';
             case medium:
