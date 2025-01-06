@@ -50,11 +50,11 @@ export default class FlowLauncher extends LightningElement {
 
     get launchModalSize() {
         switch(this.modalSize.toLowerCase()) {
-            case small:
+            case 'small':
                 return 'small';
-            case medium:
+            case 'medium':
                 return 'medium';
-            case full:
+            case 'full':
                 return 'full';
             default:
                 return 'large';
