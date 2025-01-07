@@ -24,6 +24,7 @@
             <property name="INPUT_Collection" label="Launched Flow Input Attribute - Collection" type="{T[]}" description="If your subflow has a record collection input you can pass a value to that variable from your main flow" role="inputOnly"/>
             <property name="isDisableClose" label="Disable Close Icon" type="Boolean" description="If true, don't allow the user to close the flow modal with the X button or the ESC key.  (Default = false)" role="inputOnly"/> 
             <property name="hideButton" label="Hide Launch Button" type="Boolean" description="If true, hide the launch button and reactively launch the flow when the Subflow Input Value or the Subflow Input Variables JSON change.  (Default = false)" role="inputOnly"/> 
+            <property name="modalSize" label="Modal Size" type="String" description="small, medium, large, or full (default = large)"/>
 
             <!-- Predefined Outputs -->
             <property name="OUTPUT_String" label="Launched Flow Output Result - String" type="String" role="outputOnly"/>

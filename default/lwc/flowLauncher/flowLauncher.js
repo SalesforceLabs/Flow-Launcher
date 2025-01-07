@@ -14,6 +14,9 @@
 *       flowModal - sub component for the Flow Launcher LWCs
 *
 *   Eric Smith - RafterOne - 12/18/24
+*
+*   01/06/25 - Eric Smith  
+*   Added modalSize attribute (small, medium, large(default), full)
 * 
 */
 
@@ -38,11 +41,25 @@ export default class FlowLauncher extends LightningElement {
     @api buttonPadding = 'slds-p-around_small';
     @api isDisableClose = false;
     @api hideButton = false;
+    @api modalSize = 'large';
     // @api INPUT_Record;
     // @api INPUT_Collection;
 
     showFlow = false;
     _sessionId;
+
+    get launchModalSize() {
+        switch(this.modalSize.toLowerCase()) {
+            case 'small':
+                return 'small';
+            case 'medium':
+                return 'medium';
+            case 'full':
+                return 'full';
+            default:
+                return 'large';
+        }
+    }
 
     // get recordType() {
     //     return 'SObject';
@@ -111,7 +128,7 @@ export default class FlowLauncher extends LightningElement {
             flowParams: this.flowParams,
             sessionId: this._sessionId,
             label: 'New Label',
-            size: 'large',            
+            size: this.launchModalSize,            
             isDisableClose: this.isDisableClose,
 
         });
