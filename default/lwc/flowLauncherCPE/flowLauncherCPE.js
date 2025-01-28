@@ -226,5 +226,12 @@ export default class flowLauncherCPE extends LightningElement {
     handleModalSizeChange(event) {
         this.dispatchFlowValueChangeEvent('modalSize', event.detail.value, 'String');
     }
+
+    get showButtonOptions() {
+        if (this.inputValues.cb_hideButton.value === 'CB_FALSE') {
+            return true;
+        }
+        return false;
+    }
     
 }
