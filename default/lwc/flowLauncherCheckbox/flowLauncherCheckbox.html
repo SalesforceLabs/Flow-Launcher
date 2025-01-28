@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <lightning-input
+                class={cbClass}
+                type="checkbox" 
+                label={label}
+                name={name}
+                disabled={disabled}
+                checked={isChecked}
+                field-level-help={fieldLevelHelp}
+                onblur={handleCheckboxChange}
+                onchange={handleCheckboxChange}
+            ></lightning-input>
+        </div>
+    </div>
+</template>
