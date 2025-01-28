@@ -7,20 +7,24 @@
         <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning__FlowScreen">
+        <targetConfig targets="lightning__FlowScreen" configurationEditor="c-flow-launcher-c-p-e">
             <property name="buttonLabel" label="Button Label" type="String" />
             <property name="showFlowInModal" label="Show Flow in Modal" type="Boolean" description="When true flow will launch in modal window" />
+            <property name="cb_showFlowInModal" type="String" role="inputOnly" />
             <property name="flowToLaunch" label="Flow API Name" type="String"/>
             <property name="flowInputVariableName" label="Subflow Input Variable Name" description="If passing a variable to subflow enter the variable name here i.e. recordId" type="String" placeholder="recordId"/>
             <property name="flowInputValue" label="Subflow Input Value" type="String" description="If your subflow has a string input you can pass a value to that variable from your main flow"/>
             <property name="flowInputVariablesJSON" label="Subflow Input Variables JSON" description='Example: [{"name":"stringVar","type":"String","value":"0018c000029c8kpAAA"},{"name":"numVar","type":"Number","value":47}] - See https://developer.salesforce.com/docs/platform/lwc/guide/use-flow-embed-input-variables-example.html for more information on how to format the inputs.' type="String"/>
             <property name="buttonVariant" label="Button Variant" type="String" description="The variant for your button i.e. brand default is neutral" />
             <property name="stretchButton" label="Stretch Button" type="Boolean" description="When true the button stretches the container width" />
+            <property name="cb_stretchButton" type="String" role="inputOnly"/>
             <property name="iconName" label="Icon Name" type="String" description="Icon Name i.e. utility:flow"/>
             <property name="iconPosition" label="Icon Position" type="String" description="Left or Right sets your icon position"/>
             <property name="buttonPadding" label="Button Padding" type="String" description="Sets button padding using slds styling default is slds-p-around_small" />
-            <property name="isDisableClose" label="Disable Close Icon" type="Boolean" description="If true, don't allow the user to close the flow modal with the X button or the ESC key.  (Default = false)" role="inputOnly"/> 
+            <property name="isDisableClose" label="Disable Close Icon" type="Boolean" description="If true, don't allow the user to close the flow modal with the X button or the ESC key.  (Default = false)" role="inputOnly"/>
+            <property name="cb_isDisableClose" type="String" role="inputOnly"/>
             <property name="hideButton" label="Hide Launch Button" type="Boolean" description="If true, hide the launch button and reactively launch the flow when the Subflow Input Value or the Subflow Input Variables JSON change.  (Default = false)" role="inputOnly"/>
+            <property name="cb_hideButton" type="String" role="inputOnly"/>
             <property name="modalSize" label="Modal Size" type="String" description="small, medium, large, or full (default = large)"/>
 
             <!-- Predefined Outputs -->
