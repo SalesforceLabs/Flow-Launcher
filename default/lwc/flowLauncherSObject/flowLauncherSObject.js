@@ -20,6 +20,8 @@
 *   01/06/25 - Eric Smith  
 *   Added modalSize attribute (small, medium, large(default), full)
 * 
+*   01/28/25 - Josh Dayment
+*    Added CPE support
 */
 
 import { LightningElement, api, track } from 'lwc';
@@ -29,7 +31,11 @@ import flowModal from 'c/flowModal';
 export default class FlowLauncher extends LightningElement {
 
     @api buttonLabel;
-    @api showFlowInModal;
+    @api
+    get showFlowInModal() {
+       return this.cb_showFlowInModal === 'CB_TRUE';
+    }
+    @api cb_showFlowInModal;
     @api flowToLaunch;
     @api flowParams = [];
     @api flowFinishBehavior;
@@ -39,13 +45,26 @@ export default class FlowLauncher extends LightningElement {
     @api iconName;
     @api buttonVariant;
     @api iconPosition;
-    @api stretchButton;
+    @api 
+    get stretchButton() {
+        return this.cb_stretchButton === 'CB_TRUE';
+    }
+    @api cb_stretchButton;
     @api buttonPadding = 'slds-p-around_small';
-    @api isDisableClose = false;
-    @api hideButton = false;
+    @api 
+    get isDisableClose() {
+        return this.cb_isDisableClose === 'CB_TRUE';
+    };
+    @api cb_isDisableClose;
+    @api 
+    get hideButton() {
+        return this.cb_hideButton === 'CB_TRUE';
+    };
+    @api cb_hideButton;
     @api modalSize = 'large';
     @api INPUT_Record;
     @api INPUT_Collection;
+    @api objectName;
 
     showFlow = false;
     _sessionId;
