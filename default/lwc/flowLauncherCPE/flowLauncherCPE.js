@@ -41,7 +41,7 @@ export default class flowLauncherCPE extends LightningElement {
         buttonPadding: { value: null, valueDataType: null, isCollection: false, label: 'Button Padding'  }, 
         isDisableClose: { value:null, valueDataType: null, isCollection: false, label: 'Disable Close' },
         cb_isDisableClose: { value:null, valueDataType: null, isCollection: false, label:''},
-        hideButton: { value:null, valueDataType: null, isCollection: false, label: 'Hide Button' },
+        hideButton: { value:null, valueDataType: null, isCollection: false, label: 'Hide Button (Make Reactive)' },
         cb_hideButton: {value:null, valueDataType: null, isCollection: false, label:''},
         modalSize: { value:null, valueDataType: null, isCollection: false, label: 'Modal Size' },
     
@@ -233,5 +233,4 @@ export default class flowLauncherCPE extends LightningElement {
         }
         return false;
     }
-    
-}
+    }
