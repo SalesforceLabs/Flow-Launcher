@@ -26,11 +26,13 @@
     automatic-output-variables={automaticOutputVariables}
     onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
   <c-flow-launcher-combobox name="INPUT_Record" value={inputValues.INPUT_Record.value}
-    label={inputValues.INPUT_Record.label} builder-context-filter-type={inputValues.objectName.value} builder-context={_builderContext}
-    automatic-output-variables={automaticOutputVariables}
+    label={inputValues.INPUT_Record.label} builder-context-filter-type={inputValues.objectName.value}
+    builder-context={_builderContext} automatic-output-variables={automaticOutputVariables}
     onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
   <c-flow-launcher-combobox name="INPUT_Collection" value={inputValues.INPUT_Collection.value}
-    label={inputValues.INPUT_Collection.label} builder-context-filter-collection-boolean={inputValues.INPUT_Collection.isCollection} builder-context-filter-type={inputValues.objectName.value} builder-context={_builderContext}
+    label={inputValues.INPUT_Collection.label}
+    builder-context-filter-collection-boolean={inputValues.INPUT_Collection.isCollection}
+    builder-context-filter-type={inputValues.objectName.value} builder-context={_builderContext}
     automatic-output-variables={automaticOutputVariables}
     onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
   <template lwc:if={showButtonOptions}>
