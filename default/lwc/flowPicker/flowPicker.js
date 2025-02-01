@@ -4,6 +4,7 @@ import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class flowPicker extends LightningElement {
     @api label;
+    @api value;
     @api selectedFlowApiName;
     @api showActiveFlowsOnly = false;
     @api searchString;
@@ -64,6 +65,7 @@ export default class flowPicker extends LightningElement {
         this.dispatchEvent(attributeChangeEvent);
         let selectedFlow = this.options.find(option => this.selectedFlowApiName === option.value);
         this.dispatchEvent(new CustomEvent('flowselect', { detail: { ...selectedFlow } }));
+        this.value = this.selectedFlowApiName;
     }
 
     // This is added to make the selected Flow API Name available to a calling Aura component
