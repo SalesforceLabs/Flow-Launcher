@@ -6,11 +6,10 @@
     field-level-help={inputValues.showFlowInModal.helpText} checked={inputValues.cb_showFlowInModal.value}
     oncheckboxchanged={handleCheckboxChange}></c-flow-launcher-checkbox>
   <c-flow-launcher-checkbox name="isDisableClose" label={inputValues.isDisableClose.label}
-    checked={inputValues.cb_isDisableClose.value} oncheckboxchanged={handleCheckboxChange}></c-flow-launcher-checkbox>
-  <c-flow-launcher-checkbox name="hideButton" label={inputValues.hideButton.label}
-    checked={inputValues.cb_hideButton.value} oncheckboxchanged={handleCheckboxChange}></c-flow-launcher-checkbox>
+    checked={inputValues.cb_isDisableClose.value} oncheckboxchanged={handleCheckboxChange}
+    disabled={isNotShowFlowInModal} field-level-help={disableCloseHelp}></c-flow-launcher-checkbox>
   <lightning-combobox label="Modal Size" value={inputValues.modalSize.value} options={modalSizes}
-    onchange={handleModalSizeChange}></lightning-combobox>
+    disabled={isNotShowFlowInModal} onchange={handleModalSizeChange}></lightning-combobox>
   <c-flow-picker name="flowToLaunch" label={inputValues.flowToLaunch.label} value={inputValues.flowToLaunch.value}
     show-active-flows-only onflowselect={handleFlowSelect}></c-flow-picker>
   <c-flow-launcher-combobox name="flowInputVariableName" value={inputValues.flowInputVariableName.value}
@@ -35,18 +34,33 @@
     builder-context-filter-type={inputValues.objectName.value} builder-context={_builderContext}
     automatic-output-variables={automaticOutputVariables}
     onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
+  <c-flow-launcher-checkbox name="hideButton" label={inputValues.hideButton.label}
+    checked={inputValues.cb_hideButton.value} oncheckboxchanged={handleCheckboxChange}></c-flow-launcher-checkbox>
   <template lwc:if={showButtonOptions}>
+    <div class={sampleButtonClass}>
+      <lightning-formatted-rich-text value="&lt;strong&gt;Sample Launch Button&lt;/strong&gt;"></lightning-formatted-rich-text>
+      <div class={buttonPaddingClass}>
+        <lightning-button 
+            label={inputValues.buttonLabel.value}
+            title={inputValues.buttonLabel.value}
+            variant={inputValues.buttonVariant.value}
+            icon-name={inputValues.iconName.value}
+            icon-position={inputValues.iconPosition.value}
+            stretch={isStretchButton}
+        ></lightning-button>
+      </div>
+    </div>
     <c-flow-launcher-combobox name="buttonLabel" value={inputValues.buttonLabel.value}
       label={inputValues.buttonLabel.label} builder-context={_builderContext}
       automatic-output-variables={automaticOutputVariables}
       onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
     <lightning-combobox label="Button Variant" value={inputValues.buttonVariant.value} options={buttonVariants}
       onchange={handleVariantChange}></lightning-combobox>
-    <lightning-combobox label="Icon Position" value={inputValues.iconPosition.value} options={iconPositions}
-      onchange={handleIconPositionChange}></lightning-combobox>
     <c-flow-launcher-combobox name="iconName" value={inputValues.iconName.value} label={inputValues.iconName.label}
       builder-context={_builderContext} automatic-output-variables={automaticOutputVariables}
       onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
+    <lightning-combobox label="Icon Position" value={inputValues.iconPosition.value} options={iconPositions}
+      onchange={handleIconPositionChange}></lightning-combobox>
     <lightning-combobox label="Button Padding" value={inputValues.buttonPadding.value} options={paddingOptions}
       onchange={handlePaddingChange}></lightning-combobox>
     <c-flow-launcher-checkbox name="stretchButton" label={inputValues.stretchButton.label}

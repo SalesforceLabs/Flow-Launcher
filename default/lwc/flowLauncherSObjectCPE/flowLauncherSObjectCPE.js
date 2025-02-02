@@ -118,6 +118,27 @@ export default class flowLauncherCPE extends LightningElement {
         ];
     }
 
+    get isNotShowFlowInModal() {
+        return (this._isNotShowFlowInModal == undefined) ? !this.inputValues.showFlowInModal.value : this._isNotShowFlowInModal;
+    }
+    set isNotShowFlowInModal(value) {
+        this._isNotShowFlowInModal = value;
+    }
+    _isNotShowFlowInModal;
+
+    disableCloseHelp = 'Select if you want to disable the ability for the user to escape or click the X to close the flow modal.  This will require the user to complete the flow in order to return.';
+
+    get sampleButtonClass() {
+        return 'slds-box slds-box_x-small slds-m-top_xx-small';
+    }
+
+    get buttonPaddingClass() {
+        return this.inputValues.buttonPadding.value;
+    }
+
+    get isStretchButton() {
+        return this.inputValues.cb_stretchButton.value == 'CB_TRUE';
+    }
 
     /* LIFECYCLE HOOKS */
    
@@ -187,7 +208,6 @@ export default class flowLauncherCPE extends LightningElement {
                 this.dispatchFlowValueChangeEvent(event.currentTarget.name, typeValue, 'String');
             }
 
-            
         }
     }
 
@@ -207,6 +227,9 @@ export default class flowLauncherCPE extends LightningElement {
             event.detail.newStringValue,
             'String'
           );
+          if (changedAttribute == 'showFlowInModal') {
+            this.isNotShowFlowInModal = !event.detail.newValue;
+          }
         }
         
       }
@@ -255,7 +278,7 @@ export default class flowLauncherCPE extends LightningElement {
     }
 
     get showButtonOptions() {
-        if (this.inputValues.cb_hideButton.value === 'CB_FALSE') {
+        if (this.inputValues.cb_hideButton.value == null || this.inputValues.cb_hideButton.value === 'CB_FALSE') {
             return true;
         }
         return false;
