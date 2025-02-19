@@ -1,4 +1,6 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
+import getFlowVariables from '@salesforce/apex/FlowLauncherVariableController.getFlowVariables';
+import getFlowVersionInfo from '@salesforce/apex/FlowLauncherVersionInfoController.getFlowVersionInfo';
 
 const DATA_TYPE = {
     STRING: 'String',
@@ -50,6 +52,64 @@ export default class flowLauncherCPE extends LightningElement {
     
         
     };
+
+    @api 
+    get selectedFlowApiName() {
+        return this._selectedFlowApiName;
+    }
+    set selectedFlowApiName(value) {
+        this._selectedFlowApiName = value;
+    }
+    _selectedFlowApiName;
+
+    @api 
+    get flowVersionViewId() {
+        return this._flowVersionViewId;
+    }
+    set flowVersionViewId(value) {
+        this._flowVersionViewId = value;
+    }
+    _flowVersionViewId;
+
+    error;
+    activeVersionId;
+    latestVersionId;
+
+    @wire(getFlowVersionInfo, { flowApiName: '$selectedFlowApiName' })
+    wiredFlowVersionInfo({ error, data }) {
+        if (data) {
+            if (data.hasError) {
+                this.error = { body: { message: data.errorMessage }};
+                this.activeVersionId = undefined;
+                this.latestVersionId = undefined;
+            } else {
+                this.activeVersionId = data.activeVersionId;
+                this.latestVersionId = data.latestVersionId;
+                this.error = undefined;
+            }
+        } else if (error) {
+            this.error = error;
+            this.activeVersionId = undefined;
+            this.latestVersionId = undefined;
+        }
+        this.flowVersionViewId = (!this.activeVersionId) ? this.latestVersionId : this.activeVersionId; // Use Latest Flow Version unless there is an Active Version then use that instead
+        this.processFlowInputVariables(this._flowVersionViewId);
+    }
+
+    get hasError() {
+        return this.error != null;
+    }
+
+    flowInputVariables;
+    inputVariableOptions;
+
+    get isNoFlowAPIName() {
+        return this._selectedFlowApiName == null || this._selectedFlowApiName == '';
+    }
+
+    get inputVariablePlaceholder() {
+        return (this.inputVariableOptions?.length == 0) ? 'The selected flow has no variables available for input' : 'Select Flow Input Variable';
+    }
 
     @api get builderContext() {
         return this._builderContext;
@@ -166,6 +226,9 @@ export default class flowLauncherCPE extends LightningElement {
                         this.inputValues[curInputParam.name].value = curInputParam.value;
                     }
                     this.inputValues[curInputParam.name].valueDataType = curInputParam.valueDataType;
+                    if (curInputParam.name == 'flowToLaunch' && curInputParam.value && curInputParam.value != null) {
+                        this.selectedFlowApiName = curInputParam.value;
+                    }
                 }
             });
         }
@@ -178,6 +241,32 @@ export default class flowLauncherCPE extends LightningElement {
                 this.typeValue = typeMapping.value;
             }
         });
+    }
+
+    processFlowInputVariables(flowVersionId) {
+        getFlowVariables({flowVersionViewId: flowVersionId})
+        .then((flowVariables) => {
+            this.flowInputVariables = flowVariables;
+            this.inputVariableOptions = [];
+            this.flowInputVariables.forEach(flowInputVariable => {
+                this.inputVariableOptions.push({
+                    label: flowInputVariable.apiName,
+                    value: flowInputVariable.apiName,
+                    description: this.processDescription(flowInputVariable.dataType, flowInputVariable.description, flowInputVariable.isCollection, flowInputVariable.objectType)
+                });
+            });
+        })
+        .catch(error => {
+            console.log("flowLauncherCPE ~ processFlowInputVariables ~ error:", error);
+            this.flowInputVariables = undefined;
+        });
+    }
+
+    processDescription(dataType, description, isCollection, objectType) {
+        let type = (dataType == 'sObject') ? `${objectType} Object` : dataType;
+        let isCol = (isCollection) ? ' Collection' : '';
+        let desc = (description && description != null) ? ` : ${description}` : '';
+        return `${type}${isCol}${desc}`;
     }
 
     /* EVENT HANDLERS */
@@ -256,8 +345,8 @@ export default class flowLauncherCPE extends LightningElement {
     }
 
     handleFlowSelect(event) {
-        
-            this.dispatchFlowValueChangeEvent('flowToLaunch', event.currentTarget.selectedFlowApiName, 'String');
+        this.selectedFlowApiName = event.currentTarget.selectedFlowApiName;
+        this.dispatchFlowValueChangeEvent('flowToLaunch', this._selectedFlowApiName, 'String');
         
     }
 
@@ -277,6 +366,10 @@ export default class flowLauncherCPE extends LightningElement {
         this.dispatchFlowValueChangeEvent('modalSize', event.detail.value, 'String');
     }
 
+    handleInputVariableChange(event) {
+        this.dispatchFlowValueChangeEvent('flowInputVariableName', event.detail.value, 'String');
+    }
+    
     get showButtonOptions() {
         if (this.inputValues.cb_hideButton.value == null || this.inputValues.cb_hideButton.value === 'CB_FALSE') {
             return true;
@@ -284,4 +377,3 @@ export default class flowLauncherCPE extends LightningElement {
         return false;
     }
     }
-   

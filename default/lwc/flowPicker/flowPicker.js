@@ -51,7 +51,8 @@ export default class flowPicker extends LightningElement {
             return this.flowDefinitions.map(curFD => {
                 return {
                     value: curFD.ApiName,
-                    label: curFD.Label
+                    label: curFD.Label,
+                    id: curFD.ActiveVersionId
                 }
             });
         } else {
@@ -64,7 +65,10 @@ export default class flowPicker extends LightningElement {
         const attributeChangeEvent = new FlowAttributeChangeEvent('selectedFlowApiName', this.selectedFlowApiName);
         this.dispatchEvent(attributeChangeEvent);
         let selectedFlow = this.options.find(option => this.selectedFlowApiName === option.value);
-        this.dispatchEvent(new CustomEvent('flowselect', { detail: { ...selectedFlow } }));
+        let activeFlowId = this.options.find(option => this.selectedFlowApiName === option.id);
+        console.log("🚀 ~ flowPicker ~ handleChange ~ activeFlowId:", activeFlowId);
+        this.dispatchEvent(new CustomEvent('flowselect', { detail: { ...selectedFlow} }));
+        // this.dispatchEvent(new CustomEvent('flowselect', { detail: { apiName: {...selectedFlow}, activeId: {...activeFlowId} } }));
         this.value = this.selectedFlowApiName;
     }
 

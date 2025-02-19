@@ -12,10 +12,8 @@
     disabled={isNotShowFlowInModal} onchange={handleModalSizeChange}></lightning-combobox>
   <c-flow-picker name="flowToLaunch" label={inputValues.flowToLaunch.label} value={inputValues.flowToLaunch.value}
     show-active-flows-only onflowselect={handleFlowSelect}></c-flow-picker>
-  <c-flow-launcher-combobox name="flowInputVariableName" value={inputValues.flowInputVariableName.value}
-    label={inputValues.flowInputVariableName.label} builder-context={_builderContext}
-    automatic-output-variables={automaticOutputVariables}
-    onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
+  <lightning-combobox label={inputValues.flowInputVariableName.label} value={inputValues.flowInputVariableName.value} options={inputVariableOptions}
+    disabled={isNoFlowAPIName} placeholder={inputVariablePlaceholder} onchange={handleInputVariableChange}></lightning-combobox>
   <c-flow-launcher-combobox name="flowInputValue" value={inputValues.flowInputValue.value}
     label={inputValues.flowInputValue.label} builder-context={_builderContext}
     automatic-output-variables={automaticOutputVariables}
