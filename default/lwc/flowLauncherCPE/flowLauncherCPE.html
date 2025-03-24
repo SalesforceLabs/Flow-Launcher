@@ -14,11 +14,43 @@
   <c-flow-launcher-combobox name="flowInputValue" value={inputValues.flowInputValue.value}
     label={inputValues.flowInputValue.label} builder-context={_builderContext}
     automatic-output-variables={automaticOutputVariables}
-    onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
+    onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>  
   <c-flow-launcher-combobox name="flowInputVariablesJSON" value={inputValues.flowInputVariablesJSON.value}
     label={inputValues.flowInputVariablesJSON.label} builder-context={_builderContext}
     automatic-output-variables={automaticOutputVariables}
     onvaluechanged={handleFlowComboboxValueChange}></c-flow-launcher-combobox>
+    <!-- Button to open the modal -->
+<lightning-button 
+label="Open JSON Generator" 
+onclick={openJsonGeneratorModal}>
+</lightning-button>
+
+<!-- Modal component -->
+<template if:true={isModalOpen}>
+<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <header class="slds-modal__header">
+            <h2 class="slds-text-heading_medium slds-hyphenate">JSON Generator</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+            <c-json-generator 
+                name="flowInputVariablesJSON" 
+                value={inputValues.flowInputVariablesJSON.value}
+                label={inputValues.flowInputVariablesJSON.label} 
+                builder-context={_builderContext} 
+                automatic-output-variables={automaticOutputVariables}>
+            </c-json-generator>
+        </div>
+        <footer class="slds-modal__footer">
+            <lightning-button 
+                label="Close" 
+                onclick={closeJsonGeneratorModal}>
+            </lightning-button>
+        </footer>
+    </div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
   <c-flow-launcher-checkbox name="hideButton" label={inputValues.hideButton.label}
     checked={inputValues.cb_hideButton.value} oncheckboxchanged={handleCheckboxChange}></c-flow-launcher-checkbox>
   <template lwc:if={showButtonOptions}>
