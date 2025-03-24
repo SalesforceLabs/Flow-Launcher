@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="JSON Generator">
+        <div class="slds-p-around_medium">
+            <lightning-input label="Name" value={name} onchange={handleNameChange}></lightning-input>
+            <lightning-combobox
+                name="dataType"
+                label="Data Type"
+                value={dataType}
+                placeholder="Select Type"
+                options={dataTypeOptions}
+                onchange={handleDataTypeChange}
+            ></lightning-combobox>
+            <c-flow-launcher-combobox name="flowInputValue" value={value}
+    label="Value" builder-context={_builderContext}
+    automatic-output-variables={_automaticOutputVariables}
+    onvaluechanged={handleValueChange}></c-flow-launcher-combobox>
+            <lightning-button label="Add Row" onclick={addRow} variant="brand"></lightning-button>
+            <template if:true={rows.length}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_medium">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Name">Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Data Type">Data Type</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Value">Value</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.id} class="slds-hint-parent">
+                                <td data-label="Name">
+                                    <div class="slds-truncate">{row.name}</div>
+                                </td>
+                                <td data-label="Type">
+                                    <div class="slds-truncate">{row.dataType}</div>
+                                </td>
+                                <td data-label="Value">
+                                    <div class="slds-truncate">{row.value}</div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <div class="slds-m-top_medium">
+                    <lightning-textarea label="JSON Output" value={jsonOutput} readonly></lightning-textarea>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
