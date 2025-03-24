@@ -72,6 +72,16 @@ export default class flowLauncherCPE extends LightningElement {
     activeVersionId;
     latestVersionId;
 
+    @track isModalOpen = false;
+
+    openJsonGeneratorModal() {
+        this.isModalOpen = true;
+    }
+
+    closeJsonGeneratorModal() {
+        this.isModalOpen = false;
+    }
+
     @wire(getFlowVersionInfo, { flowApiName: '$selectedFlowApiName' })
     wiredFlowVersionInfo({ error, data }) {
         if (data) {
@@ -101,7 +111,7 @@ export default class flowLauncherCPE extends LightningElement {
     inputVariableOptions;
 
     get isNoFlowAPIName() {
-        return this._selectedFlowApiName == null || this._selectedFlowApiName == '';
+        return this._selectedFlowApiName == null || this._selectedFlowApiName == '' || this._selectedFlowApiName == undefined;
     }
 
     get inputVariablePlaceholder() {
@@ -252,7 +262,7 @@ export default class flowLauncherCPE extends LightningElement {
             });
         })
         .catch(error => {
-            console.log("flowLauncherCPE ~ processFlowInputVariables ~ error:", error);
+            //console.log("flowLauncherCPE ~ processFlowInputVariables ~ error:", error);
             this.flowInputVariables = undefined;
         });
     }
