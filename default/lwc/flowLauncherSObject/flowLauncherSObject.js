@@ -87,7 +87,7 @@ export default class FlowLauncher extends LightningElement {
     }
 
     get recordCollectionType() {
-        return 'SObject[]';
+        return 'SObject';
     }
 
     // Track prior value(s) for reactive attributes
